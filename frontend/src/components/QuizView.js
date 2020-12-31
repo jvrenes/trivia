@@ -80,6 +80,7 @@ class QuizView extends Component {
   submitGuess = (event) => {
     event.preventDefault();
     const formatGuess = this.state.guess.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").toLowerCase()
+    console.log(formatGuess)
     let evaluate =  this.evaluateAnswer()
     this.setState({
       numCorrect: !evaluate ? this.state.numCorrect : this.state.numCorrect + 1,
@@ -102,6 +103,7 @@ class QuizView extends Component {
   renderPrePlay(){
       return (
           <div className="quiz-play-holder">
+              {console.log(this.state)}
               <div className="choose-header">Choose Category</div>
               <div className="category-holder">
                   <div className="play-category" onClick={this.selectCategory}>ALL</div>
@@ -132,8 +134,12 @@ class QuizView extends Component {
 
   evaluateAnswer = () => {
     const formatGuess = this.state.guess.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").toLowerCase()
-    const answerArray = this.state.currentQuestion.answer.toLowerCase().split(' ');
-    return answerArray.includes(formatGuess)
+    const answerArray = this.state.currentQuestion.answer.toLowerCase()
+    if (formatGuess == answerArray) {
+      return true
+    } else {
+      return false
+    }
   }
 
   renderCorrectAnswer(){
@@ -158,7 +164,7 @@ class QuizView extends Component {
           <div className="quiz-play-holder">
             <div className="quiz-question">{this.state.currentQuestion.question}</div>
             <form onSubmit={this.submitGuess}>
-              <input type="text" name="guess" onChange={this.handleChange}/>
+              <input required type="text" name="guess" onChange={this.handleChange}/>
               <input className="submit-guess button" type="submit" value="Submit Answer" />
             </form>
           </div>
@@ -167,6 +173,7 @@ class QuizView extends Component {
 
 
   render() {
+    console.log("STATE: ", this.state)
     return this.state.quizCategory
         ? this.renderPlay()
         : this.renderPrePlay()

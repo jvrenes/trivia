@@ -10,7 +10,7 @@ class FormView extends Component {
       question: "",
       answer: "",
       difficulty: 1,
-      category: 1,
+      category: "art",
       categories: {}
     }
   }
@@ -20,7 +20,7 @@ class FormView extends Component {
       url: `http://127.0.0.1:5000/categories`, //TODO: update request URL
       type: "GET",
       success: (result) => {
-        console.log(result)
+        console.log("CATEGORIES: ", result)
         this.setState({ categories: result.categories })
         return;
       },
@@ -29,6 +29,7 @@ class FormView extends Component {
         return;
       }
     })
+    console.log("FORMVIEW STATE: ", this.state)
   }
 
 

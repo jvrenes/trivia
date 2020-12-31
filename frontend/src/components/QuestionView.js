@@ -26,12 +26,13 @@ class QuestionView extends Component {
       url: `http://127.0.0.1:5000/questions?page=${this.state.page}`, //TODO: update request URL
       type: "GET",
       success: (result) => {
-        console.log(result)
+        console.log("getQuestions: ", result)
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
           categories: result.categories,
           currentCategory: result.current_category })
+        console.log("STATE:", this.state)
         return;
       },
       error: (error) => {
@@ -61,7 +62,7 @@ class QuestionView extends Component {
 
   getByCategory= (id) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      url: `http://127.0.0.1:5000/categories/${id}/questions`, //TODO: update request URL
       type: "GET",
       success: (result) => {
         this.setState({
@@ -78,17 +79,19 @@ class QuestionView extends Component {
   }
 
   submitSearch = (searchTerm) => {
+    console.log("searchTerm: ", searchTerm)
     $.ajax({
-      url: `/questions`, //TODO: update request URL
+      url: `/questions/search`, //TODO: update request URL
       type: "POST",
       dataType: 'json',
       contentType: 'application/json',
       data: JSON.stringify({searchTerm: searchTerm}),
-      xhrFields: {
-        withCredentials: true
-      },
+      // xhrFields: {
+      //   withCredentials: true
+      // },
       crossDomain: true,
       success: (result) => {
+        console.log(result)
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
@@ -109,6 +112,7 @@ class QuestionView extends Component {
           url: `http://127.0.0.1:5000/questions/${id}`, //TODO: update request URL
           type: "DELETE",
           success: (result) => {
+            console.log("getQuestions:", result)
             this.getQuestions();
           },
           error: (error) => {
@@ -142,6 +146,7 @@ class QuestionView extends Component {
               key={q.id}
               question={q.question}
               answer={q.answer}
+              // category={this.state.categories[q.category]} 
               category={q.category} 
               difficulty={q.difficulty}
               questionAction={this.questionAction(q.id)}
