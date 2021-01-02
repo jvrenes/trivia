@@ -59,11 +59,8 @@ def create_app(test_config=None):
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
-  @app.route('/categories', methods=['GET', 'POST'])
+  @app.route('/categories', methods=['GET'])
   def get_categories():
-    if request.method == 'POST':
-      return "Trying to POST on Categories"
-
     if request.method == 'GET':
       categories = Category.query.all()
       if categories is not None:
@@ -72,10 +69,13 @@ def create_app(test_config=None):
           item = Category.format(category)
           result.append(item['type'])
         return jsonify({
-          "succes": True,
+          "success": True,
           "categories": result
         })
       return abort(404)
+    
+    else:
+      abort(405)
 
 
 
@@ -129,7 +129,7 @@ def create_app(test_config=None):
 
     else:
       return jsonify({
-        'succes': True,
+        'success': True,
         'question': question.format()
       })
   '''
@@ -327,17 +327,28 @@ def create_app(test_config=None):
         """Executed before each test. Define test variables and initialize app."""
         self.app = self.create_app()
         self.client = self.app.test_client
-        pass
+        self.database.name = "trivia_test"
+        self.database_path = "postgres://{}@{}/{}".format('javier', 'localhost:5432', 'trivia_test')
+        setup_db(self.app, self.database_path)
+        
+        self.new_question = {
+          'question': 'new question from test',
+          'answer': 'new answer from test',
+          'category': 'art',
+          'difficulty': 2
+        }
 
     def tearDown(self):
         """Executed after reach test"""
         pass
 
-    def test_given_behavior(self):
-        """Test _____________ """
-        res = self.client().get('/')
+    def test_new_question(self):
+        """Test new questions added to the database """
+        res = self.client().get('/questions')
+        data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
   
   return app
 
