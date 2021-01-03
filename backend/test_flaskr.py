@@ -15,7 +15,7 @@ class TriviaTestCase(unittest.TestCase):
         self.app = create_app()
         self.client = self.app.test_client
         self.database_name = "trivia_test"
-        self.database_path = "postgres://{}@{}/{}".format('javier', 'localhost:5432', 'trivia_test')
+        self.database_path = "postgres://{}@{}/{}".format('madafaca', 'localhost:5432', 'trivia_test')
         setup_db(self.app, self.database_path)
 
         self.new_question = {
@@ -97,6 +97,15 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
+    def error_creating_new_question(self):
+        """Test error creating new question with a wrong method"""
+        res = self.client().put('/questions', json={'question':'new question from test', 'answer':'new answer from test', 'category':'art', 'difficulty':2})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 405)
+        self.assertEqual(data['succes'], False)
+        self.assertEqual(data['error'], 405)
+        self.assertEqual(data['message'], "method not allowed")
 
     """
     TODO

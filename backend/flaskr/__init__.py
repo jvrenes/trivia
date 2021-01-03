@@ -51,6 +51,9 @@ def create_app(test_config=None):
       item = Category.format(category)
       result.append(item)
 
+    if len(result) == 0:
+      abort(404)
+
     return result
 
 
@@ -104,15 +107,16 @@ def create_app(test_config=None):
       categories = Category.query.all()
       formatted_categories = [category.format() for category in categories]
       category_ids = []
+      result = formatted_questions[start:end]
       for category in formatted_categories:
         category_ids.append(category['type'])
 
-      if len(formatted_questions) == 0:
+      if len(result) == 0:
         abort(404)
 
       return jsonify({
         'succes': True,
-        'questions': formatted_questions[start:end],
+        'questions': result,
         'total_questions': len(questions),
         'categories': category_ids
       })
@@ -151,11 +155,11 @@ def create_app(test_config=None):
 
       return jsonify({
         'success': True,
-        'question_id_deleted': question_id,
+        'question_id_deleted': question_id
       })
     
     except:
-      abort(422)
+      abort(404)
 
   '''
   @TODO: 
@@ -175,9 +179,6 @@ def create_app(test_config=None):
     new_answer = body.get('answer', None)
     new_category = body.get('category', None)
     new_difficulty = body.get('difficulty', None)
-
-
-    print(new_category)
 
     try:
       item = Question(question=new_question, answer=new_answer, category=new_category, difficulty=new_difficulty)
@@ -208,7 +209,7 @@ def create_app(test_config=None):
     print(query)
 
     if query is None:
-      abort(404)
+      abort(400) #Bad request error
 
     try:
       questions = Question.query.filter(Question.question.ilike('%{}%'.format(query))).all()
@@ -216,7 +217,7 @@ def create_app(test_config=None):
       print("Questions: ", formatted_questions)
 
       if len(questions) == 0:
-        abort(404)
+        abort(404) #Not found error
       
       return jsonify({
         "success": True,
@@ -318,37 +319,38 @@ def create_app(test_config=None):
   Create error handlers for all expected errors 
   including 404 and 422. 
   '''
+  @app.errorhandler(404)
+  def not_found(error):
+    return jsonify({
+      'success': False,
+      'error': 404,
+      'message': 'Not found'
+    }), 404
 
+  @app.errorhandler(422)
+  def unprocessable(error):
+    return jsonify({
+      "success": False,
+      "error": 422,
+      "message": "unprocessable"
+    }), 422
+    
+  @app.errorhandler(400)
+  def bad_request(error):
+    return jsonify({
+      "success": False,
+      "error": 400,
+      "message": "bad request"
+    }), 400
 
-  class AppNameTestCase(unittest.TestCase):
-    """This class represents the trivia test case"""
+  @app.errorhandler(405)
+  def unprocessable(error):
+    return jsonify({
+      "success": False,
+      "error": 405,
+      "message": "method not allowed"
+    }), 405
 
-    def setUp(self):
-        """Executed before each test. Define test variables and initialize app."""
-        self.app = self.create_app()
-        self.client = self.app.test_client
-        self.database.name = "trivia_test"
-        self.database_path = "postgres://{}@{}/{}".format('javier', 'localhost:5432', 'trivia_test')
-        setup_db(self.app, self.database_path)
-        
-        self.new_question = {
-          'question': 'new question from test',
-          'answer': 'new answer from test',
-          'category': 'art',
-          'difficulty': 2
-        }
-
-    def tearDown(self):
-        """Executed after reach test"""
-        pass
-
-    def test_new_question(self):
-        """Test new questions added to the database """
-        res = self.client().get('/questions')
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
   
   return app
 
