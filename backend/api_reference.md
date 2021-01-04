@@ -240,6 +240,20 @@ The API returns four different errors types when request fails:
 ### POST /quizzes
 
 - General: 
-    - Obtain an aleatory question for any given category if selected, or any question from any category.
+    - Obtain an aleatory question for any given category if selected, if ypu want to return any random question within all the categories, you should post the value 'click' for the 'category_name' key.
     - Questions are not repeated within the same game.
-    - Returns an object containing
+    - Returns an object containing the question
+    - Sample: ```curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type:application/json" -d '{"quiz_category":"{"type":"click", "id":"0"}", "previous_questions":"[]"}'```
+
+```
+{
+  "question": {
+      "answer": "Respuesta6", 
+      "category": "geography", 
+      "difficulty": 1, 
+      "id": 13, 
+      "question": "Pregunta6"
+    },
+  "success": true
+}
+```
