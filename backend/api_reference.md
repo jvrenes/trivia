@@ -1,6 +1,6 @@
 #API REFERENCE
 
-##Getting Starte
+##Getting Started
 
 -Base URL: http://127.0.0.1:5000 this app can only be run locally.
 -Authentication: This version of the application does not require authentication API keys.
@@ -24,7 +24,6 @@ The API returns four different errors types when request fails
 ##Endpoints
 
 ### GET /categories
-
     -General:
         -Returns an array list of categories and a success value.
         -Sample: ```curl http://127.0.0.1:5000/categories``` 
