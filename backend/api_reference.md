@@ -27,7 +27,6 @@ The API returns four different errors types when request fails:
 
 ### GET /categories
 -General:
-
     -Returns an array list of categories and a success value.
     -Sample: ```curl http://127.0.0.1:5000/categories``` 
 
