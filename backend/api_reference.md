@@ -8,13 +8,13 @@
 ## Error Handling
 
 Errors are returned as JSON objects in the following format:
-
+```
 {
     "succes": False,
     "error": 400,
     "messagge": "bad request"
 }
-
+```
 The API returns four different errors types when request fails
     -400: Bad request
     -404: Resource not found
