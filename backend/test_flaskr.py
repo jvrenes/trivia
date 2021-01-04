@@ -1,13 +1,8 @@
 import os
 import unittest
 import json
-<<<<<<< HEAD
-from flask_sqlalchemy import SQLAlchemy
-
-=======
 
 from flask_sqlalchemy import SQLAlchemy
->>>>>>> test
 from flaskr import create_app
 from models import setup_db, Question, Category
 
@@ -20,11 +15,6 @@ class TriviaTestCase(unittest.TestCase):
         self.app = create_app()
         self.client = self.app.test_client
         self.database_name = "trivia_test"
-<<<<<<< HEAD
-        self.database_path = "postgres://{}/{}".format('localhost:5432', self.database_name)
-        setup_db(self.app, self.database_path)
-
-=======
         self.database_path = "postgres://{}@{}/{}".format('madafaca', 'localhost:5432', 'trivia_test')
         setup_db(self.app, self.database_path)
 
@@ -35,7 +25,6 @@ class TriviaTestCase(unittest.TestCase):
           "difficulty": 2
         }
 
->>>>>>> test
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -47,8 +36,6 @@ class TriviaTestCase(unittest.TestCase):
         """Executed after reach test"""
         pass
 
-<<<<<<< HEAD
-=======
 
 
     def test_get_categories(self):
@@ -124,7 +111,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['error'], 405)
         self.assertEqual(data['message'], "method not allowed")
 
->>>>>>> test
     """
     TODO
     Write at least one test for each test for successful operation and for expected errors.
