@@ -19,10 +19,10 @@ class TriviaTestCase(unittest.TestCase):
         setup_db(self.app, self.database_path)
 
         self.new_question = {
-          'question': 'new question from test',
-          'answer': 'new answer from test',
-          'category': 'art',
-          'difficulty': 2
+          "question": "new question from test",
+          "answer": "new answer from test",
+          "category": "art",
+          "difficulty": 2
         }
 
         # binds the app to the current context
@@ -60,9 +60,9 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_getting_specific_question(self):
         """Test getting a specific question"""
-        res = self.client().get('/questions/1')
+        res = self.client().get('/questions/6')
         data = json.loads(res.data)
-        question = Question.query.get(1)
+        question = Question.query.get(6)
         result = question.format()
 
         self.assertEqual(res.status_code, 200)
@@ -77,7 +77,7 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_delete_question(self):
         """Testing delete a question by its id"""
-        res = self.client().delete('questions/1')
+        res = self.client().delete('questions/5')
         data = json.loads(res.data)
 
         self.assertEqual(data['success'], True)
@@ -91,10 +91,14 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_create_new_question(self):
         """Test new question added to the database """
-        res = self.client().post('/questions', json={'question':'new question from test', 'answer':'new answer from test', 'category':'art', 'difficulty':2})
+        res = self.client().post('/questions', json={
+          "question": "new question from test",
+          "answer": "new answer from test",
+          "category": "art",
+          "difficulty": 2
+        })
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def error_creating_new_question(self):
