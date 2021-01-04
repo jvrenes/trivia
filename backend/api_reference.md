@@ -162,7 +162,7 @@ The API returns four different errors types when request fails:
 
 - General:
     - Delete a given question based on the question id passed in the endpoint.
-    - Returns a succes value and the question id that has been deleted.
+    - Returns a success value and the question id that has been deleted.
     - Sample : ```curl -X DELETE http://127.0.0.1:5000/questions/9```
 
 ```
@@ -171,4 +171,19 @@ The API returns four different errors types when request fails:
   "success": true
 }
 ```
+
+### POST /questions
+
+- General:
+    - Add a new question to the database.
+    - Returns a success value for the operation.
+    - Sample: ```curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"question";"new question", "answer":"new answer", "category":category name", "difficulty": 2}```
+
+```
+{
+    "success": True,
+}
+````
+
+
 
