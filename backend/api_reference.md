@@ -139,4 +139,21 @@ The API returns four different errors types when request fails:
 }
 ```
 
+### GET /questions/<question_id>
 
+- General:
+    - Returns an object with the info based on a particuales question id and a success value.
+    - Sample: ```curl http://127.0.0.1:5000/question/6``` 
+
+```
+{
+  "question": {
+    "answer": "Edward Scissorhands", 
+    "category": 5, 
+    "difficulty": 3, 
+    "id": 6, 
+    "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+  }, 
+  "success": true
+}
+```
