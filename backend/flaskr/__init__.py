@@ -3,6 +3,10 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
+<<<<<<< HEAD
+=======
+import unittest
+>>>>>>> test
 
 from models import setup_db, Question, Category
 
@@ -50,6 +54,12 @@ def create_app(test_config=None):
       item = Category.format(category)
       result.append(item)
 
+<<<<<<< HEAD
+=======
+    if len(result) == 0:
+      abort(404)
+
+>>>>>>> test
     return result
 
 
@@ -58,11 +68,16 @@ def create_app(test_config=None):
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
+<<<<<<< HEAD
   @app.route('/categories', methods=['GET', 'POST'])
   def get_categories():
     if request.method == 'POST':
       return "Trying to POST on Categories"
 
+=======
+  @app.route('/categories', methods=['GET'])
+  def get_categories():
+>>>>>>> test
     if request.method == 'GET':
       categories = Category.query.all()
       if categories is not None:
@@ -71,10 +86,20 @@ def create_app(test_config=None):
           item = Category.format(category)
           result.append(item['type'])
         return jsonify({
+<<<<<<< HEAD
           "succes": True,
           "categories": result
         })
       return abort(404)
+=======
+          "success": True,
+          "categories": result
+        })
+      return abort(404)
+    
+    else:
+      abort(405)
+>>>>>>> test
 
 
 
@@ -103,15 +128,27 @@ def create_app(test_config=None):
       categories = Category.query.all()
       formatted_categories = [category.format() for category in categories]
       category_ids = []
+<<<<<<< HEAD
       for category in formatted_categories:
         category_ids.append(category['type'])
 
       if len(formatted_questions) == 0:
+=======
+      result = formatted_questions[start:end]
+      for category in formatted_categories:
+        category_ids.append(category['type'])
+
+      if len(result) == 0:
+>>>>>>> test
         abort(404)
 
       return jsonify({
         'succes': True,
+<<<<<<< HEAD
         'questions': formatted_questions[start:end],
+=======
+        'questions': result,
+>>>>>>> test
         'total_questions': len(questions),
         'categories': category_ids
       })
@@ -128,7 +165,11 @@ def create_app(test_config=None):
 
     else:
       return jsonify({
+<<<<<<< HEAD
         'succes': True,
+=======
+        'success': True,
+>>>>>>> test
         'question': question.format()
       })
   '''
@@ -150,11 +191,19 @@ def create_app(test_config=None):
 
       return jsonify({
         'success': True,
+<<<<<<< HEAD
         'question_id_deleted': question_id,
       })
     
     except:
       abort(422)
+=======
+        'question_id_deleted': question_id
+      })
+    
+    except:
+      abort(404)
+>>>>>>> test
 
   '''
   @TODO: 
@@ -175,9 +224,12 @@ def create_app(test_config=None):
     new_category = body.get('category', None)
     new_difficulty = body.get('difficulty', None)
 
+<<<<<<< HEAD
 
     print(new_category)
 
+=======
+>>>>>>> test
     try:
       item = Question(question=new_question, answer=new_answer, category=new_category, difficulty=new_difficulty)
       item.insert()
@@ -207,7 +259,11 @@ def create_app(test_config=None):
     print(query)
 
     if query is None:
+<<<<<<< HEAD
       abort(404)
+=======
+      abort(400) #Bad request error
+>>>>>>> test
 
     try:
       questions = Question.query.filter(Question.question.ilike('%{}%'.format(query))).all()
@@ -215,7 +271,11 @@ def create_app(test_config=None):
       print("Questions: ", formatted_questions)
 
       if len(questions) == 0:
+<<<<<<< HEAD
         abort(404)
+=======
+        abort(404) #Not found error
+>>>>>>> test
       
       return jsonify({
         "success": True,
@@ -236,6 +296,7 @@ def create_app(test_config=None):
   '''
   @app.route('/categories/<int:id>/questions')
   def questions_by_category(id):
+<<<<<<< HEAD
     category = Category.query.get(id + 1)
     category_name = category.type
     questions = Question.query.filter_by(category=category_name).all()
@@ -244,6 +305,20 @@ def create_app(test_config=None):
       "questions": formatted_questions,
       "success": True,
     })
+=======
+    try:
+      category = Category.query.get(id + 1)
+      category_name = category.type
+      questions = Question.query.filter_by(category=category_name).all()
+      formatted_questions = [question.format() for question in questions]
+      return jsonify({
+        "questions": formatted_questions,
+        "success": True,
+      })
+
+    except:
+      abort(404)
+>>>>>>> test
 
 
   '''
@@ -317,6 +392,41 @@ def create_app(test_config=None):
   Create error handlers for all expected errors 
   including 404 and 422. 
   '''
+<<<<<<< HEAD
+=======
+  @app.errorhandler(404)
+  def not_found(error):
+    return jsonify({
+      'success': False,
+      'error': 404,
+      'message': 'Not found'
+    }), 404
+
+  @app.errorhandler(422)
+  def unprocessable(error):
+    return jsonify({
+      "success": False,
+      "error": 422,
+      "message": "unprocessable"
+    }), 422
+    
+  @app.errorhandler(400)
+  def bad_request(error):
+    return jsonify({
+      "success": False,
+      "error": 400,
+      "message": "bad request"
+    }), 400
+
+  @app.errorhandler(405)
+  def unprocessable(error):
+    return jsonify({
+      "success": False,
+      "error": 405,
+      "message": "method not allowed"
+    }), 405
+
+>>>>>>> test
   
   return app
 
