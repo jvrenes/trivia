@@ -38,7 +38,7 @@ The API returns four different errors types when request fails:
     - Results are paginated in groups of 10. Include a request argument to choose page number,starting from 1.
 - Sample: ```curl http://127.0.0.1:5000/questions```
 
-´´´
+```
 {
   "categories": [
     "Science", 
@@ -123,6 +123,6 @@ The API returns four different errors types when request fails:
   "succes": true, 
   "total_questions": 19
 }
-´´´
+```
 
 
