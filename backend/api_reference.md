@@ -26,6 +26,7 @@ The API returns four different errors types when request fails:
 ## Endpoints
 
 ### GET /categories
+
 - General:
     - Returns an array list of categories and a success value.
     - Sample: ```curl http://127.0.0.1:5000/categories``` 
@@ -35,3 +36,4 @@ The API returns four different errors types when request fails:
 - General:
     - Returns a list of questions object, succes value and total number of questions.
     - Results are paginated in groups of 10. Include a request argument to choose page number,starting from 1.
+- Sample: ```curl http://127.0.0.1:5000/questions```
