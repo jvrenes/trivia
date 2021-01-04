@@ -32,6 +32,7 @@ The API returns four different errors types when request fails:
 
 ### GET /questions
 
--General:
-    -Returns a list of questions object, succes value and total number of questions.
-    -Results are paginated in groups of 10. Include a request argument to choose page number,starting from 1.
+General:
+
+-Returns a list of questions object, succes value and total number of questions.
+-Results are paginated in groups of 10. Include a request argument to choose page number,starting from 1.
