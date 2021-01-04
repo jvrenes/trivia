@@ -163,7 +163,7 @@ The API returns four different errors types when request fails:
 - General:
     - Delete a given question based on the question id passed in the endpoint.
     - Returns a succes value and the question id that has been deleted.
-    - Sample : ```curl -X DELETE http://127.0.0.1:5000/questions/9````
+    - Sample : ```curl -X DELETE http://127.0.0.1:5000/questions/9```
 
 ```
 {
