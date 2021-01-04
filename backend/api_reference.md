@@ -1,11 +1,11 @@
-#API REFERENCE
+# API REFERENCE
 
-##Getting Started
+## Getting Started
 
 -Base URL: http://127.0.0.1:5000 this app can only be run locally.
 -Authentication: This version of the application does not require authentication API keys.
 
-##Error Handling
+## Error Handling
 
 Errors are returned as JSON objects in the following format:
 
@@ -21,7 +21,7 @@ The API returns four different errors types when request fails
     -405: Method not allowed
     -422: Unprocessable
 
-##Endpoints
+## Endpoints
 
 ### GET /categories
     -General:
