@@ -238,14 +238,18 @@ def create_app(test_config=None):
   '''
   @app.route('/categories/<int:id>/questions')
   def questions_by_category(id):
-    category = Category.query.get(id + 1)
-    category_name = category.type
-    questions = Question.query.filter_by(category=category_name).all()
-    formatted_questions = [question.format() for question in questions]
-    return jsonify({
-      "questions": formatted_questions,
-      "success": True,
-    })
+    try:
+      category = Category.query.get(id + 1)
+      category_name = category.type
+      questions = Question.query.filter_by(category=category_name).all()
+      formatted_questions = [question.format() for question in questions]
+      return jsonify({
+        "questions": formatted_questions,
+        "success": True,
+      })
+
+    except:
+      abort(404)
 
 
   '''

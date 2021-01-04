@@ -183,7 +183,63 @@ The API returns four different errors types when request fails:
 {
     "success": True,
 }
-````
+```
 
+### POST /questions/search
 
+- General:
+    - Search any coincidence on the questions title for any given word or term.
+    - Returns an object containing any questions that match with the given term, succes value, and a number with the total of questions found.
+    - Sample: ```curl http://127.0.0.1:5000/questions/search -X POST -H "Content-Type: application/json" -d '{"searchTerm":"mahal"}' ```
 
+```
+{
+  "questions": [
+    {
+      "answer": "Agra", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 15, 
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 1
+}
+```
+
+### GET /categories/<category_name>/questions
+
+- General:
+    - Obtain questions on a given category name.
+    - Returns an object containing questions, and succes value.
+    - Sample ```curl http://127.0.0.1:5000/categories/art/questions````
+
+```
+{
+  "questions": [
+    {
+      "answer": "Respuesta6", 
+      "category": "geography", 
+      "difficulty": 1, 
+      "id": 13, 
+      "question": "Pregunta6"
+    }, 
+    {
+      "answer": "Respuesta9", 
+      "category": "geography", 
+      "difficulty": 4, 
+      "id": 16, 
+      "question": "Pregunta9"
+    }
+  ], 
+  "success": true
+}
+```
+
+### POST /quizzes
+
+- General: 
+    - Obtain an aleatory question for any given category if selected, or any question from any category.
+    - Questions are not repeated within the same game.
+    - Returns an object containing
